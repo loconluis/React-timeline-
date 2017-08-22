@@ -1,86 +1,87 @@
-import React, {Component} from 'react';
-import { Link } from 'react-router';
+import React, { Component } from 'react';
 
-import Post from '../../posts/containers/Post.jsx';
-import api from '../../api.js';
-import Loading from '../../shared/components/Loading.jsx';
+import Post from '../../posts/containers/Post';
+import api from '../../api';
+import Loading from '../../shared/components/Loading';
 
 
 import styles from './Page.css';
 
-class Home extends Component{
-    constructor(props){
-        super(props);
+class Home extends Component {
+  constructor(props) {
+    super(props);
 
 
-        this.state = {
-            page: 1,
-            posts: [],
-            loading: true
-        };
+    this.state = {
+      page: 1,
+      posts: [],
+      loading: true,
+    };
 
-        this.handleScroll = this.handleScroll.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
+  }
+
+  async componentDidMount() {
+    this.initialFetch();
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  async initialFetch() {
+    const posts = await api.posts.getList(this.state.page);
+
+    this.setState({
+      posts,
+      page: this.state.page + 1,
+      loading: false,
+    });
+  }
+
+  handleScroll() {
+    if (this.state.loading) return null;
+
+    const scrolled = window.scrollY;
+    const viewportHeight = window.innerHeight;
+    const fullHeight = document.body.clientHeight;
+
+    if (!(scrolled + viewportHeight + 100 >= fullHeight)) {
+      return null;
     }
 
-    async componentDidMount(){
+    return this.setState({ loading: true }, async () => {
+      try {
         const posts = await api.posts.getList(this.state.page);
 
         this.setState({
-            posts,
-            page: this.state.page+1,
-            loading: false
-        })
-
-        window.addEventListener('scroll', this.handleScroll);
-    }
-
-    componentWillUnmount(){
-        window.removeEventListener('scroll', this.handleScroll);
-    }
-
-
-    render(){
-        return(
-            <section name="Home" className={styles.section}>
-                <section className={styles.list}>
-                    {this.state.posts
-                        .map(post=> <Post key={post.id} {...post} />)
-                    }
-                    {this.state.loading && (
-                        <Loading />
-                    )}
-                </section>
-            </section>
-        );
-    }
-
-    handleScroll(event){
-        if(this.state.loading) return null;
-
-        const scrolled = window.scrollY;
-        const viewportHeight = window.innerHeight;
-        const fullHeight=document.body.clientHeight;
-
-        if(!(scrolled+viewportHeight+100>=fullHeight)){
-            return null;
-        }
-
-        this.setState({ loading:true}, async ()=>{
-            try{
-                const posts = await api.posts.getList(this.state.page);
-
-                this.setState({
-                    posts: this.state.posts.concat(posts),
-                    page: this.state.page+1,
-                    loading: false
-                })
-
-            }catch(error){
-                console.error(error);
-                this.setState({loading:false});
-            }
+          posts: this.state.posts.concat(posts),
+          page: this.state.page + 1,
+          loading: false,
         });
-    }
+      } catch (error) {
+        console.error(error);
+        this.setState({ loading: false });
+      }
+    });
+  }
+
+  render() {
+    return (
+      <section name="Home" className={styles.section}>
+        <section className={styles.list}>
+          {this.state.posts
+              .map(post => <Post key={post.id} {...post} />)
+          }
+          {this.state.loading && (
+            <Loading />
+          )}
+        </section>
+      </section>
+    );
+  }
+
 }
 
 export default Home;
