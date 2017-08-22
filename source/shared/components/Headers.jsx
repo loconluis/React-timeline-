@@ -9,7 +9,7 @@ function Header() {
           Mi Primera App con React
       </h1>
 
-      <nav role="navigation" className={styles.navigation}>
+      <nav className={styles.navigation}>
         <Link to="/" className={styles.link}>
         Home
         </Link>
