@@ -1,9 +1,10 @@
 import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 function Loading() {
   return (
     <h3>
-        Loading Data...
+      <FormattedMessage id="loading" />
     </h3>
   );
 }

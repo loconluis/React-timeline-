@@ -1,4 +1,28 @@
 {
-    "en":{},
-    "es":{}
+    "en":{
+        "loading": "Loading data...",
+        "title": "My First Application with React",
+        "title.home": "Home",
+        "title.profile": "Profile of {name}",
+        "profile.field.basic": "Basic info",
+        "profile.field.address": "Address",
+        "header.nav.platzi": "Platzi",
+        "comment.meta.author": "by: <a href=\"mailto:{email}\" target=\"_blank\">{name}</a>",
+        "post.meta.comment": "{amount} comments",
+        "post.meta.readMore": "Read more...",
+        "error": "Go Back to Home"
+    },
+    "es":{ 
+        "loading": "Cargando datos...",
+        "title": "Mi Primera Aplicación con React",
+        "title.home": "Inicio",
+        "title.profile": "Perfile de {name}",
+        "profile.field.basic": "Información Básica",
+        "profile.field.address": "Dirección",
+        "header.nav.platzi": "Platzi",
+        "comment.meta.author": "por: <a href=\"mailto:{email}\" target=\"_blank\">{name}</a>",
+        "post.meta.comment": "hay {amount} comentarios",
+        "post.meta.readMore": "Leer más...",
+        "error": "Regresar al inicio"
+    }
 }

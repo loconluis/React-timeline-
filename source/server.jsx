@@ -11,7 +11,6 @@ import messages from './messages.json';
 
 function requestHandler(request, response) {
   const locale = request.headers['accept-language'].indexOf('es') >= 0 ? 'es' : 'en';
-
   const context = createServerRenderContext();
 
   let html = renderToString(
