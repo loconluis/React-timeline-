@@ -22,19 +22,19 @@ function Pages() {
         exactly
         component={Home}
       />
-      {/* Detalle de articulo*/}
+      {/* Detalle de articulo */}
       <Match
         pattern="/post/:id"
         exactly
         component={Post}
       />
-      {/* Perfil de usuario*/}
+      {/* Perfil de usuario */}
       <Match
         pattern="/user/:id"
         exactly
         component={Profile}
       />
-      {/* Error 404*/}
+      {/* Error 404 */}
       <Miss component={Error404} />
     </main>
   );
