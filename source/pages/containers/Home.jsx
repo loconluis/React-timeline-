@@ -45,20 +45,18 @@ class Home extends Component {
     const viewportHeight = window.innerHeight;
     const fullHeight = document.body.clientHeight;
 
-    if (!(scrolled + viewportHeight + 100 >= fullHeight)) {
+    if (!(scrolled + viewportHeight + 300 >= fullHeight)) {
       return null;
     }
 
     return this.setState({ loading: true }, async () => {
       try {
-        const posts = await api.posts.getList(this.props.page);
-        
-        this.props.actions.setPost(posts);
+        await this.props.actions.postsNextPage();
         this.setState({
           loading: false,
         });
       } catch (error) {
-        console.error(error);
+        // console.error(error);
         this.setState({ loading: false });
       }
     });
